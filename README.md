@@ -28,7 +28,7 @@ npm install
 Install, configure and run mongodb 
 https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-windows/
 
-and then start this server is:
+and then start this server:
 
 ```
 npm start
