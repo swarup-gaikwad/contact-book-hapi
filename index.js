@@ -15,7 +15,6 @@ const server = Hapi.server({
 });
 
 const start = async () => {
-
   await server.register([require('vision'), require('inert')]);
 
   server.views({

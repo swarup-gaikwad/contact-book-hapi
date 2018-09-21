@@ -1,5 +1,5 @@
 const Contact = require('./models/contact');
-const Joi = require('Joi')
+const Joi = require('Joi');
 
 module.exports = [{
   method: 'GET',
@@ -23,33 +23,33 @@ module.exports = [{
   method: ['PUT', 'POST'],
   path: '/contact/addContact',
   handler: async (request, reply) => {
-      const promise = new Promise((resolve, reject) => {
-        const contact = new Contact({
-          fName: request.payload.fName,
-          lName: request.payload.lName,
-          mobile: request.payload.mobile,
-          empId: request.payload.empId
-        })
-        contact.save((err, savedContact) => {
-          if (err) {
-            console.log(err)
-            reject(reply(err).code(500));
-          }
-          resolve('contact added sucessfully');
-        });
+    const promise = new Promise((resolve, reject) => {
+      const contact = new Contact({
+        fName: request.payload.fName,
+        lName: request.payload.lName,
+        mobile: request.payload.mobile,
+        empId: request.payload.empId
       });
-      return promise;
-    },
-    options: {
-      validate: {
-        payload: {
-          fName: Joi.string().required(),
-          lName: Joi.string().required(),
-          mobile: Joi.string().min(7).max(15),
-          empId: Joi.required(),
+      contact.save((err, savedContact) => {
+        if (err) {
+          console.log(err);
+          reject(reply(err).code(500));
         }
+        resolve('contact added sucessfully');
+      });
+    });
+    return promise;
+  },
+  options: {
+    validate: {
+      payload: {
+        fName: Joi.string().required(),
+        lName: Joi.string().required(),
+        mobile: Joi.string().min(7).max(15),
+        empId: Joi.required()
       }
     }
+  }
 }, {
   method: 'GET',
   path: '/contacts',
@@ -74,7 +74,6 @@ module.exports = [{
       Contact.deleteOne({
         _id: request.params.id
       }, function (err, result) {
-
         if (err) {
           reject(err, 'Internal MongoDB error');
         }
@@ -112,7 +111,6 @@ module.exports = [{
       }, {
         $set: request.payload
       }, function (err, result) {
-
         if (err) {
           reject(err, 'Internal MongoDB error');
         }
@@ -130,7 +128,7 @@ module.exports = [{
         fName: Joi.string().required(),
         lName: Joi.string().required(),
         mobile: Joi.string().min(7).max(15),
-        empId: Joi.required(),
+        empId: Joi.required()
       }
     }
   }
