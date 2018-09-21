@@ -1,4 +1,5 @@
 const Contact = require('./models/contact');
+const Joi = require('Joi')
 
 module.exports = [
     {
@@ -33,6 +34,16 @@ module.exports = [
                 });
             });
             return promise;
+        },
+        options: {
+            validate: {
+                payload: {
+                    fName: Joi.string().required(),
+                    lName: Joi.string().required(),
+                    mobile: Joi.string().min(7).max(15),
+                    empId: Joi.required(),
+                }
+            }
         }
     }, {
         method: 'GET',
@@ -123,6 +134,16 @@ module.exports = [
                 });
             });
             return promise;
+        },
+        options: {
+            validate: {
+                payload: {
+                    fName: Joi.string().required(),
+                    lName: Joi.string().required(),
+                    mobile: Joi.string().min(7).max(15),
+                    empId: Joi.required(),
+                }
+            }
         }
     }
 ];
