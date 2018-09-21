@@ -1,20 +1,6 @@
-<p>{{contact.fName}} {{contact.lName}}</p>
-<p>mobile number is: {{contact.mobile}}</p>
-<p>Emp id: {{contact.empId}}</p>
-<button class="editContact" data-id="{{contact.id}}">Edit</button>
-
-<form id="updateContactForm" data-id="{{contact.id}}">
-    <label>First Name</label>
-    <input type="text" name="fName" value="{{contact.fName}}" />
-    <br />
-    <label>Last Name</label>
-    <input type="text" name="lName" value="{{contact.lName}}" />
-    <br />
-    <label>Mobile Number</label>
-    <input type="number" name="mobile" value="{{contact.mobile}}" />
-    <br />
-    <label>EMP Id</label>
-    <input type="text" name="empId" value="{{contact.empId}}" />
-    <br />
-    <input type="submit" value="Update" />
-</form>
+<div>
+    <p>{{contact.fName}} {{contact.lName}}</p>
+    <p>mobile number is: {{contact.mobile}}</p>
+    <p>Emp id: {{contact.empId}}</p>
+    <a class="btn btn-primary" href="/contact/edit/{{contact.id}}">Edit</a>
+</div>

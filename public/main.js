@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('.deleteContact').on('click', () => {
         $.ajax({
-            url: '/contact/' + event.target.dataset.id,
+            url: '/contact/delete/' + event.target.dataset.id,
             type: 'DELETE',
             success: function (result) {
                 console.log(result);
@@ -10,20 +10,10 @@ $(document).ready(function () {
         });
     });
 
-    $('.editContact').on('click', () => {
-        $.ajax({
-            url: '/editContact/' + event.target.dataset.id,
-            type: 'GET',
-            success: function (result) {
-                console.log(result);
-            }
-        });
-    });
-
     $('#updateContactForm').on('submit', function (event) {
         event.preventDefault();
         $.ajax({
-            url: '/updateContact/' + $('#updateContactForm').data().id,
+            url: '/contact/update/' + $('#updateContactForm').data().id,
             type: 'PUT',
             data: getFormData($(this)),
             success: function (result) {
