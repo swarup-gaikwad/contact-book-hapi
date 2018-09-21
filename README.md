@@ -1,22 +1,20 @@
 # Contact Book
 
-This is a sample project user can store his contacts in the local storage of browser. Technologies used are AngularJs1.6, HTML5, CSS3, Bootstrap4.
+This is a sample project user can store his contacts in the mongodb. Technologies used are nodejs, hapi.js, jquery, mongodb, HTML5, Bootstrap4.
 
 ## Getting Started
 
-To get you started you can simply clone the `contact-book` repository and install the dependencies:
+To get you started you can simply clone the `contact-book-hapi-react` repository and install the dependencies:
 
 ### Prerequisites
 
 You must have Node.js and its package manager (npm) installed.
 
-### Clone `contact-book`
-
-Clone the `angular-seed` repository using git:
+### Clone `contact-book-hapi-react`
 
 ```
-git clone https://github.com/swarup-gaikwad/contact-book.git
-cd contact-book
+git clone https://github.com/swarup-gaikwad/contact-book-hapi-react.git
+cd contact-book-hapi-react
 ```
 
 ### Install Dependencies
@@ -33,4 +31,4 @@ The simplest way to start this server is:
 npm start
 ```
 
-Now browse to the app at [`localhost:8000/index.html`].
+Now browse to the app at [`localhost:8080/`].
