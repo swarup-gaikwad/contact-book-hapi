@@ -25,7 +25,10 @@ npm install
 
 ### Run the Application
 
-The simplest way to start this server is:
+Install, configure and run mongodb 
+https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-windows/
+
+and then start this server:
 
 ```
 npm start
