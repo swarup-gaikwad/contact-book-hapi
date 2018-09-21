@@ -1,20 +1,24 @@
 <h2>Edit Contact</h2>
 <form id="updateContactForm" data-id="{{contact.id}}">
-    <div class="form-group">
-        <label for="fName">First Name</label>
-        <input type="text" class="form-control" name="fName" placeholder="Enter First Name" value="{{contact.fName}}" required>
-    </div>
-    <div class="form-group">
-        <label for="lName">First Last</label>
-        <input type="text" class="form-control" name="lName" placeholder="Enter Last Name" value="{{contact.lName}}" required>
-    </div>
-    <div class="form-group">
-        <label for="mobile">Mobile Number</label>
-        <input type="text" class="form-control" name="mobile" placeholder="Enter Mobile Number" value="{{contact.mobile}}" minlength="7" maxlength="15">
-    </div>
-    <div class="form-group">
-        <label for="empId">Employee Id</label>
-        <input type="text" class="form-control" name="empId" placeholder="Enter Employee Id" value="{{contact.empId}}" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Update Contact</button>
+  <div class="form-group">
+    <label for="fName">First Name</label>
+    <input type="text" class="form-control" name="fName" placeholder="Enter First Name" value="{{contact.fName}}"
+      required>
+  </div>
+  <div class="form-group">
+    <label for="lName">First Last</label>
+    <input type="text" class="form-control" name="lName" placeholder="Enter Last Name" value="{{contact.lName}}"
+      required>
+  </div>
+  <div class="form-group">
+    <label for="mobile">Mobile Number</label>
+    <input type="text" class="form-control" name="mobile" placeholder="Enter Mobile Number" value="{{contact.mobile}}"
+      minlength="7" maxlength="15">
+  </div>
+  <div class="form-group">
+    <label for="empId">Employee Id</label>
+    <input type="text" class="form-control" name="empId" placeholder="Enter Employee Id" value="{{contact.empId}}"
+      required>
+  </div>
+  <button type="submit" class="btn btn-primary">Update Contact</button>
 </form>
