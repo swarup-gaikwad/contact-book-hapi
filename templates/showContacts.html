@@ -1,9 +1,36 @@
-<h2>Your Contacts</h2>
-<ul>
-    {{#each contacts}}
-    <li>
-        <a id="viewContact" href="contact/{{id}}">{{fName}}</a>
-        <button class="deleteContact" data-id="{{id}}">Delete</button>
-    </li>
-    {{/each}}
-</ul>
+<div class="row">
+    <div class="col-12">
+        <h2 class="font-weight-normal">Your Contacts:</h2>
+        <div class=" table-responsive">
+            <table class="table table-bordered table-hover table-sm">
+                <thead class="thead-light">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone Number</th>
+                        <th>Emp Id</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each contacts}}
+                    <tr>
+                        <td>{{fName}}</td>
+                        <td>{{lName}}</td>
+                        <td>{{mobile}}</td>
+                        <td>{{empId}}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="/contact/edit/{{id}}">
+                                <i class="fas fa-user-edit"></i> Edit
+                            </a>
+                            <button class="btn btn-danger btn-sm deleteContact" data-id="{{id}}">
+                                <i class="fas fa-user-times"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -12,11 +12,17 @@ module.exports = [
         method: 'GET',
         path: '/',
         handler: function (request, h) {
+            return h.view('home');
+        }
+    }, {
+        method: 'GET',
+        path: '/contact/add',
+        handler: function (request, h) {
             return h.view('addContact');
         }
     }, {
         method: ['PUT', 'POST'],
-        path: '/contact/add',
+        path: '/contact/addContact',
         handler: async (request, reply) => {
             const promise = new Promise((resolve, reject) => {
                 const contact = new Contact({
@@ -56,22 +62,6 @@ module.exports = [
                     }
                     resolve(h.view('showContacts', {
                         contacts: contacts
-                    }));
-                });
-            });
-            return promise;
-        }
-    }, {
-        method: 'GET',
-        path: '/contact/{id}',
-        handler: function (request, h) {
-            const promise = new Promise((resolve, reject) => {
-                Contact.findById(request.params.id, function (error, contacts) {
-                    if (error) {
-                        console.error(error);
-                    }
-                    resolve(h.view('contactDetails', {
-                        contact: contacts
                     }));
                 });
             });
