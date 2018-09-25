@@ -4,25 +4,25 @@ const Joi = require('Joi');
 module.exports = [{
   method: 'GET',
   path: '/public/{file}',
-  handler: function (request, h) {
+  handler: (request, h) => {
     return h.file(request.params.file);
   }
 }, {
   method: 'GET',
   path: '/',
-  handler: function (request, h) {
+  handler: (request, h) => {
     return h.view('home');
   }
 }, {
   method: 'GET',
   path: '/contact/add',
-  handler: function (request, h) {
+  handler: (request, h) => {
     return h.view('addContact');
   }
 }, {
-  method: ['PUT', 'POST'],
+  method: 'POST',
   path: '/contact/addContact',
-  handler: async (request, reply) => {
+  handler: (request, h) => {
     const promise = new Promise((resolve, reject) => {
       const contact = new Contact({
         fName: request.payload.fName,
@@ -33,9 +33,9 @@ module.exports = [{
       contact.save((err, savedContact) => {
         if (err) {
           console.log(err);
-          reject(reply(err).code(500));
+          reject(h(err).code(500));
         }
-        resolve('contact added sucessfully');
+        resolve(h.redirect('/contacts'));
       });
     });
     return promise;
@@ -45,7 +45,7 @@ module.exports = [{
       payload: {
         fName: Joi.string().required(),
         lName: Joi.string().required(),
-        mobile: Joi.string().min(7).max(15),
+        mobile: Joi.string().length(10),
         empId: Joi.required()
       }
     }
@@ -53,14 +53,15 @@ module.exports = [{
 }, {
   method: 'GET',
   path: '/contacts',
-  handler: function (request, h) {
+  handler: (request, h) => {
     const promise = new Promise((resolve, reject) => {
-      Contact.find(function (error, contacts) {
+      Contact.find((error, contacts) => {
         if (error) {
           console.error(error);
         }
         resolve(h.view('showContacts', {
-          contacts: contacts
+          contacts: contacts,
+          hasContacts: contacts.length === 0
         }));
       });
     });
@@ -69,16 +70,16 @@ module.exports = [{
 }, {
   method: 'DELETE',
   path: '/contact/delete/{id}',
-  handler: function (request, reply) {
+  handler: (request, h) => {
     const promise = new Promise((resolve, reject) => {
       Contact.deleteOne({
         _id: request.params.id
-      }, function (err, result) {
+      }, (err, result) => {
         if (err) {
           reject(err, 'Internal MongoDB error');
         }
         if (result.n === 0) {
-          resolve('contact not found');
+          reject(new Error('contact not found'));
         }
         resolve('contact deleted succussfully');
       });
@@ -88,9 +89,9 @@ module.exports = [{
 }, {
   method: 'GET',
   path: '/contact/edit/{id}',
-  handler: function (request, h) {
+  handler: (request, h) => {
     const promise = new Promise((resolve, reject) => {
-      Contact.findById(request.params.id, function (error, contact) {
+      Contact.findById(request.params.id, (error, contact) => {
         if (error) {
           console.error(error);
         }
@@ -104,20 +105,20 @@ module.exports = [{
 }, {
   method: 'PUT',
   path: '/contact/update/{id}',
-  handler: function (request, reply) {
+  handler: (request, h) => {
     const promise = new Promise((resolve, reject) => {
       Contact.updateOne({
         _id: request.params.id
       }, {
         $set: request.payload
-      }, function (err, result) {
+      }, (err, result) => {
         if (err) {
           reject(err, 'Internal MongoDB error');
         }
         if (result.n === 0) {
-          resolve('contact not found');
+          reject(new Error('contact not found'));
         }
-        resolve('contact updated succussfully');
+        resolve('contact updated');
       });
     });
     return promise;
@@ -127,9 +128,37 @@ module.exports = [{
       payload: {
         fName: Joi.string().required(),
         lName: Joi.string().required(),
-        mobile: Joi.string().min(7).max(15),
+        mobile: Joi.string().length(10),
         empId: Joi.required()
       }
+    }
+  }
+}, {
+  method: 'PATCH',
+  path: '/contact/partialUpdate/{id}',
+  handler: (request, h) => {
+    const promise = new Promise((resolve, reject) => {
+      Contact.updateOne({
+        _id: request.params.id
+      }, {
+        $set: request.payload
+      }, (err, result) => {
+        if (err) {
+          reject(err, 'Internal MongoDB error');
+        }
+        resolve('contact updated');
+      });
+    });
+    return promise;
+  },
+  options: {
+    validate: {
+      payload: Joi.object({
+        fName: Joi.string().optional(),
+        lName: Joi.string().optional(),
+        mobile: Joi.string().length(10),
+        empId: Joi.optional()
+      }).required().min(1)
     }
   }
 }];

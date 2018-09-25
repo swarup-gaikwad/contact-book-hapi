@@ -1,7 +1,7 @@
 'use strict';
 
 const Hapi = require('hapi');
-const db = require('./database').db;
+const db = require('./database').db; // eslint-disable-line no-unused-vars
 const Path = require('path');
 var routes = require('./routes');
 
