@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(() => {
   $('.deleteContact').on('click', (event) => {
     $.ajax({
@@ -34,7 +36,7 @@ $(document).ready(() => {
     let targetId = event.currentTarget.dataset.id;
     let mobile = $('#' + targetId + 'MobileInput').val();
     $.ajax({
-      url: '/contact/partialUpdate/' + targetId,
+      url: '/contact/mobileUpdate/' + targetId,
       type: 'PATCH',
       data: {
         mobile: mobile

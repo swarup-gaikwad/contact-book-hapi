@@ -1,5 +1,6 @@
-const Contact = require('./models/contact');
-const Joi = require('Joi');
+'use strict';
+
+const api = require('./api');
 
 module.exports = [{
   method: 'GET',
@@ -23,143 +24,37 @@ module.exports = [{
   method: 'POST',
   path: '/contact/addContact',
   handler: (request, h) => {
-    const promise = new Promise((resolve, reject) => {
-      const contact = new Contact({
-        fName: request.payload.fName,
-        lName: request.payload.lName,
-        mobile: request.payload.mobile,
-        empId: request.payload.empId
-      });
-      contact.save((err, savedContact) => {
-        if (err) {
-          console.log(err);
-          reject(h(err).code(500));
-        }
-        resolve(h.redirect('/contacts'));
-      });
-    });
-    return promise;
-  },
-  options: {
-    validate: {
-      payload: {
-        fName: Joi.string().required(),
-        lName: Joi.string().required(),
-        mobile: Joi.string().length(10),
-        empId: Joi.required()
-      }
-    }
+    return api.add(request, h);
   }
 }, {
   method: 'GET',
   path: '/contacts',
   handler: (request, h) => {
-    const promise = new Promise((resolve, reject) => {
-      Contact.find((error, contacts) => {
-        if (error) {
-          console.error(error);
-        }
-        resolve(h.view('showContacts', {
-          contacts: contacts,
-          hasContacts: contacts.length === 0
-        }));
-      });
-    });
-    return promise;
+    return api.fetch(request, h);
   }
 }, {
   method: 'DELETE',
   path: '/contact/delete/{id}',
   handler: (request, h) => {
-    const promise = new Promise((resolve, reject) => {
-      Contact.deleteOne({
-        _id: request.params.id
-      }, (err, result) => {
-        if (err) {
-          reject(err, 'Internal MongoDB error');
-        }
-        if (result.n === 0) {
-          reject(new Error('contact not found'));
-        }
-        resolve('contact deleted succussfully');
-      });
-    });
-    return promise;
+    return api.delete(request, h);
   }
 }, {
   method: 'GET',
   path: '/contact/edit/{id}',
   handler: (request, h) => {
-    const promise = new Promise((resolve, reject) => {
-      Contact.findById(request.params.id, (error, contact) => {
-        if (error) {
-          console.error(error);
-        }
-        resolve(h.view('editContact', {
-          contact: contact
-        }));
-      });
-    });
-    return promise;
+    return api.edit(request, h);
   }
 }, {
   method: 'PUT',
   path: '/contact/update/{id}',
   handler: (request, h) => {
-    const promise = new Promise((resolve, reject) => {
-      Contact.updateOne({
-        _id: request.params.id
-      }, {
-        $set: request.payload
-      }, (err, result) => {
-        if (err) {
-          reject(err, 'Internal MongoDB error');
-        }
-        if (result.n === 0) {
-          reject(new Error('contact not found'));
-        }
-        resolve('contact updated');
-      });
-    });
-    return promise;
-  },
-  options: {
-    validate: {
-      payload: {
-        fName: Joi.string().required(),
-        lName: Joi.string().required(),
-        mobile: Joi.string().length(10),
-        empId: Joi.required()
-      }
-    }
+    return api.update(request, h);
   }
 }, {
   method: 'PATCH',
-  path: '/contact/partialUpdate/{id}',
+  path: '/contact/mobileUpdate/{id}',
   handler: (request, h) => {
-    const promise = new Promise((resolve, reject) => {
-      Contact.updateOne({
-        _id: request.params.id
-      }, {
-        $set: request.payload
-      }, (err, result) => {
-        if (err) {
-          reject(err, 'Internal MongoDB error');
-        }
-        resolve('contact updated');
-      });
-    });
-    return promise;
-  },
-  options: {
-    validate: {
-      payload: Joi.object({
-        fName: Joi.string().optional(),
-        lName: Joi.string().optional(),
-        mobile: Joi.string().length(10),
-        empId: Joi.optional()
-      }).required().min(1)
-    }
+    return api.mobileUpdate(request, h);
   }
 }, {
   method: [ 'GET', 'POST' ],
