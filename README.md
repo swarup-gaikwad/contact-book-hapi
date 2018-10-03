@@ -4,17 +4,17 @@ This is a sample project user can store his contacts in the mongodb. Technologie
 
 ## Getting Started
 
-To get you started you can simply clone the `contact-book-hapi-react` repository and install the dependencies:
+To get you started you can simply clone the `contact-book-hapi` repository and install the dependencies:
 
 ### Prerequisites
 
 You must have Node.js and its package manager (npm) installed.
 
-### Clone `contact-book-hapi-react`
+### Clone `contact-book-hapi`
 
 ```
-git clone https://github.com/swarup-gaikwad/contact-book-hapi-react.git
-cd contact-book-hapi-react
+git clone https://github.com/swarup-gaikwad/contact-book-hapi.git
+cd contact-book-hapi
 ```
 
 ### Install Dependencies
